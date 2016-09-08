@@ -1,0 +1,38 @@
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+
+    background-image:url(../img/maping.jpg); 
+	background-opacity：0.45;
+    background-repeat: no-repeat; 
+
+    }
+	
+
+
+.axisx path{  display: none; }
+.axisx line {
+	ﬁll: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+.axisx text {
+	font-family: sans-serif;
+	font-size: 11px; 
+}
+.axisy path,  
+.axisy line{  
+	fill: none;  
+	stroke: black;  
+	shape-rendering: crispEdges;  
+}  
+.axisy text {  
+	font-family: sans-serif;  
+	font-size: 11px;  
+}
+		
+

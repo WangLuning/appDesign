@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>map</title>
+	<link rel="stylesheet" type="text/css" href="css/mycss.css">
+	<script src="http://d3js.org/d3.v3.min.js"></script> 
+	<script src="js/mui.min.js"></script>
+	<link href="css/mui.min.css" rel="stylesheet"/>
+	<script type="text/javascript" charset="utf-8">
+  	  mui.init();
+	</script> 
+	<p>
+	<input type="button" onClick="review();" value="review">
+	<input type="button" onclick="exitapp();" value="exit">
+	</p>
+</head>
+<body>
+<script>
+ 
+var width = 800;
+var height = 500;
+
+var svg= d3.select("body").append("svg")
+.attr("width",width)
+.attr("height",height);
+
+			
+		
+var d=[1];		
+		var timetag=svg.append("g")
+					.selectAll("text")
+					.data(d)  
+					.enter()
+					.append("text")
+					.attr("transform","translate(350,45)")
+					.text("1：00")
+					.attr("font-size", "20px")
+					.attr("font-family", "Arial");
+			
+var datam=[0];	
+
+ 			
+
+svg.selectAll("circle").remove();  //清空
+var number,number2;   //计数项
+
+svg.selectAll("circle").remove();
+svg.selectAll("rect").remove();
+											  										  
+function review(){
+d3.csv("data/problem1.csv",function(d)
+	{
+		var i=0;
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x1)-121)*300)
+		.attr("cy",(parseFloat(d[i].y1)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "1:00";});
+		}
+		,0);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x2)-121)*300)
+		.attr("cy",(parseFloat(d[i].y2)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "2:00";});
+		}
+		,1000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x3)-121)*300)
+		.attr("cy",(parseFloat(d[i].y3)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "3:00";});
+		}
+		,2000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x4)-121)*300)
+		.attr("cy",(parseFloat(d[i].y4)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "4:00";});
+		}
+		,3000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x5)-121)*300)
+		.attr("cy",(parseFloat(d[i].y5)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "5:00";});
+		}
+		,4000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x6)-121)*300)
+		.attr("cy",(parseFloat(d[i].y6)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "6:00";});
+		}
+		,5000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x7)-121)*300)
+		.attr("cy",(parseFloat(d[i].y7)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "7:00";});
+		}
+		,6000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x8)-121)*300)
+		.attr("cy",(parseFloat(d[i].y8)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "8:00";});
+		}
+		,7000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x9)-121)*300)
+		.attr("cy",(parseFloat(d[i].y9)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "9:00";});
+		}
+		,8000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x10)-121)*300)
+		.attr("cy",(parseFloat(d[i].y10)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "10:00";});
+		}
+		,9000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x11)-121)*300)
+		.attr("cy",(parseFloat(d[i].y11)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "11:00";});
+		}
+		,10000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x12)-121)*300)
+		.attr("cy",(parseFloat(d[i].y12)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "12:00";});
+		}
+		,11000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x13)-121)*300)
+		.attr("cy",(parseFloat(d[i].y13)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "13:00";});
+		}
+		,12000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x14)-121)*300)
+		.attr("cy",(parseFloat(d[i].y14)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "14:00";});
+		}
+		,13000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x15)-121)*300)
+		.attr("cy",(parseFloat(d[i].y15)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "15:00";});
+		}
+		,14000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x16)-121)*300)
+		.attr("cy",(parseFloat(d[i].y16)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "16:00";});
+		}
+		,15000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x17)-121)*300)
+		.attr("cy",(parseFloat(d[i].y17)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "17:00";});
+		}
+		,16000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x18)-121)*300)
+		.attr("cy",(parseFloat(d[i].y18)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "18:00";});
+		}
+		,17000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x19)-121)*300)
+		.attr("cy",(parseFloat(d[i].y19)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "19:00";});
+		}
+		,18000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x20)-121)*300)
+		.attr("cy",(parseFloat(d[i].y20)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "20:00";});
+		}
+		,19000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x21)-121)*300)
+		.attr("cy",(parseFloat(d[i].y21)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "21:00";});
+		}
+		,20000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x22)-121)*300)
+		.attr("cy",(parseFloat(d[i].y22)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "22:00";});
+		}
+		,21000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x23)-121)*300)
+		.attr("cy",(parseFloat(d[i].y23)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "23:00";});
+		}
+		,22000);
+		
+		setTimeout(function(){
+		svg.selectAll("circle").remove();
+		var circles=svg.append("circle")
+		.attr("cx",(parseFloat(d[i].x24)-121)*300)
+		.attr("cy",(parseFloat(d[i].y24)-31)*150)
+		.attr("r", 10)
+		.attr("fill","red");
+		
+		timetag.text(function(d,i){return "24:00";});
+		}
+		,23000);
+		
+	}
+)
+}
+	
+review();				
+
+function exitapp(){
+	var nowws=plus.webview.currentWebview();
+	plus.webview.close(nowws);
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<p>
+			<input type="button" value="exit" id="exitBtn">
+		</p>
+		<script src="js/mui.min.js"></script>
+    	<link href="css/mui.min.css" rel="stylesheet"/>
+    	<script type="text/javascript" charset="utf-8">
+      		mui.init();
+    	</script>	
+	</head>
+	<body>
+		<script>
+			function exitapp(){
+			var nowws=plus.webview.currentWebview();
+			plus.webview.close(nowws);
+			}	
+			 
+			document.getElementById('exitBtn').onclick=exitapp;
+		</script>
+	</body>
+</html>

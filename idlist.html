@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>idlist</title>
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		<p>
+			<input type="button" value="exit" id="exitBtn">
+			<input type="button" value="My graph" id="graphBtn">
+		</p>
+		<script src="js/mui.min.js"></script>
+   		<link href="css/mui.min.css" rel="stylesheet"/>
+    	<script type="text/javascript" charset="utf-8">
+      	mui.init();
+    	</script>
+	</head>
+	<body>
+		<div id="input" style="align-content: center;">
+	    	<button class="mui-button-row" id="startBtn">Start!</button>
+	    </div>
+	   
+	    <div id="input" style="margin-left: 5px;">
+	    	<form class="multi-input">
+	    		<div class="mui-input-group" style="margin-left: 15px;">
+						<label><input id="top" type="checkbox" value="" >top 5</label> 
+						<label><input id="times" type="checkbox" value="" >times of meeting</label> 
+	    		</div>
+	    	</form>
+	    </div>
+	    <h4>Click on the person to see your interaction</h4>
+		<script>
+		var chosenNumber="2ba1a16f86c3d101c1b5b586bf631e0d";
+		var idarray=[];
+		var timesarray=[];
+		d3.csv("data/times.csv",function(d){
+			for(var i=0;i<d.length;i=i+2){
+				if(d[i].name1==chosenNumber){
+					//console.log(i);
+					idarray.push(d[i].name2);timesarray.push(parseInt(d[i+1].time));
+				}
+				else if(d[i].name2==chosenNumber){
+					//console.log(i);
+					idarray.push(d[i].name1);timesarray.push(parseInt(d[i+1].time));
+				}
+			}
+			for(var i=idarray.length;i<2*idarray.length;++i)timesarray[i-idarray.length]=timesarray[i];
+			insertion(timesarray,idarray,idarray.length);
+			//console.log(timesarray);
+		}
+		);
+		
+		function sqr(a){return a*a;}
+		
+		function insertion(a,b,size)
+{
+    var k;
+    var tmp1,tmp2;
+    for(var j=1;j<size;++j)
+    {
+        tmp1=a[j];tmp2=b[j];
+        for(k=j-1;(a[k]<tmp1)&&k>=0;--k)  //a[k]>tmp1这个条件不能放在下面！！！注意！！！
+        {
+            a[k+1]=a[k];b[k+1]=b[k];
+        }
+        a[k+1]=tmp1;b[k+1]=tmp2;
+    }
+}
+		//这里的问题？？？
+		timesarray=[51,18,18,6,5,2];
+		var array=[];  //定义一个全局变量
+		var xuhao;
+		var tmp=[];
+		var timesrelative=2;
+		var maxtimes=timesarray[0];                //max times of meeting in the group
+ 
+//匹配度的计算，，，数据量太大
+		var percentarray=[];             //路径的匹配程度百分比
+		var devarray=[];         //兴趣方差
+		var devpercent=[];       //方差百分比
+		var totalpercent=[];      //2:1
+		
+			d3.csv("data/interests.csv",function(error,d){
+				
+				var dest1=0;             //假设我们要找的chosenNumber是第0个，实际不一定
+				var destarray=[1,2,3,4,5,6]; //假设路径匹配的是这6个人，其实也不一定
+				
+				for(var i=0;i<idarray.length;++i){
+					percentarray.push(timesarray[i]/maxtimes);    
+				}
+				//console.log(percentarray);
+				for(var i=0;i<destarray.length;++i)
+				{
+					var devvalue=(sqr(d[destarray[i]].bank-d[dest1].bank)+sqr(d[destarray[i]].car-d[dest1].car)
+					+sqr(d[destarray[i]].money-d[dest1].money)+sqr(d[destarray[i]].stock-d[dest1].stock)
+					+sqr(d[destarray[i]].shopping-d[dest1].shopping)+sqr(d[destarray[i]].food-d[dest1].food)
+					+sqr(d[destarray[i]].it-d[dest1].it)+sqr(d[destarray[i]].estate-d[dest1].estate)
+					+sqr(d[destarray[i]].health-d[dest1].health)+sqr(d[destarray[i]].economy-d[dest1].economy)
+					+sqr(d[destarray[i]].trip-d[dest1].trip)+sqr(d[destarray[i]].sports-d[dest1].sports)
+					+sqr(d[destarray[i]].car-d[dest1].car)+sqr(d[destarray[i]].issue-d[dest1].issue)
+					+sqr(d[destarray[i]].social-d[dest1].social)+sqr(d[destarray[i]].entertain-d[dest1].entertain)
+					+sqr(d[destarray[i]].job-d[dest1].job)+sqr(d[destarray[i]].edu-d[dest1].edu)
+					+sqr(d[destarray[i]].other-d[dest1].other)+sqr(d[destarray[i]].game-d[dest1].game))/20;
+					devarray.push(devvalue);
+				}
+				//console.log(devarray)
+				var maxdev=0;
+				for(var i=0;i<devarray.length;++i){
+					if(devarray[i]>maxdev)maxdev=devarray[i];
+				}
+				for(var i=0;i<devarray.length;++i){
+					devpercent.push(devarray[i]/maxdev);
+				}
+				//console.log(devpercent)
+				for(var i=0;i<devarray.length;++i){
+					totalpercent.push(devpercent[i]*0.33+percentarray[i]*0.67)
+				}
+				//console.log(totalpercent)
+			});
+
+
+		var margin = {top: 30, right: 10, bottom: 10, left: 10},
+   			 width = 660 - margin.left - margin.right,
+   			 height = 400 - margin.top - margin.bottom;
+
+		var svg= d3.select("body").append("svg")
+    			   .attr("width", width + margin.left + margin.right)
+   				   .attr("height", height + margin.top + margin.bottom)
+   				   .append("g")
+   				   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		var linear = d3.scale.linear()
+			   .domain([0,300])
+			   .rangeRound([1,maxtimes]);
+		
+		zoombar();
+		
+		function zoombar(){
+			var rect=svg.append("rect")
+			.attr("x",10)
+			.attr("y",10)
+			.attr("width",300)
+			.attr("height",2)
+			.attr("fill","steelblue");
+
+		var rects2=svg.append("rect")
+				.attr("fill","red" )
+				.attr("y",5)
+				.attr("x",10)
+				.attr("height", 11)
+				.attr("width", 7)
+				.call(d3.behavior.drag()
+					.on("drag", dragmovement)
+				);	
+		}
+		
+		function dragmovement(d)
+	{
+	if(document.getElementById('times').checked==true){
+	
+    var newx=d3.event.x-10;
+	if(newx<0){newx=0;}              //from the zero point of our axes
+	if(newx>300){newx=300;}
+	var newy=d3.event.y;
+	if(newy!=6)newy=6;
+	d3.select(this)                  //the small rect we have chosen
+	  .attr("x",newx)
+	  .attr("y",newy);
+	  
+	var ddx=linear(newx);
+	timesrelative=Math.floor(ddx/1);
+	var tmpid2=[];
+	var tmptimes2=[];
+	//console.log(timesrelative)
+	for(var i=0;i<idarray.length;i=i+1){
+		if(timesarray[i]>=timesrelative){tmpid2.push(idarray[i]);tmptimes2.push(timesarray[i]);}
+	}
+	showAll(tmpid2,tmptimes2);
+			}	
+	}
+	
+		function showAll(id,times){	
+			//svg.selectAll("rect").remove();
+			svg.selectAll("text").remove();
+			
+    		//console.log(id.length);
+    		var place=[];
+			for(var i=0;i<id.length;++i)place[i]=20+40*i;
+			
+			var rects=svg.selectAll("g")
+						 .data(place)
+						 .enter()
+						 .append("rect")
+						 .attr("x",20)
+   						 .attr("y",function(d,i){return place[i] ;})
+   						 .attr("width", 360)
+   						 .attr("height",40)
+   						 .attr("fill","white")
+					     .attr("stroke","white")
+   						 .attr("stroke-width",1)
+   						 .call(d3.behavior.drag()
+					.on("dragstart",dragst).on("drag", dragmove).on("dragend",dragen)
+				);	
+   			
+   			var text1=svg.selectAll("g")
+   						 .data(place)
+   						 .enter()
+						 .append("text")
+						 .attr("x",22)
+   						 .attr("y",function(d,i){return place[i]+20 ;})
+        			     .attr("text-anchor", "begin")
+					     .attr("font-size", 15)
+						 .attr("fill","black")
+        				 .text(function(d,i){return id[i];});
+        	var text2=svg.selectAll("g")
+   						 .data(place)
+   						 .enter()
+						 .append("text")
+						 .attr("x",315)
+   						 .attr("y",function(d,i){return place[i]+20 ;})
+        			     .attr("text-anchor", "begin")
+					     .attr("font-size", 15)
+						 .attr("fill","black")
+        				 .text(function(d,i){return times[i];});
+        				 
+        	var text3=svg.selectAll("g")
+   						 .data(place)
+   						 .enter()
+						 .append("text")
+						 .attr("x",340)
+   						 .attr("y",function(d,i){return place[i]+20 ;})
+        			     .attr("text-anchor", "begin")
+					     .attr("font-size", 15)
+						 .attr("fill","black")
+        				 .text(function(d,i){return Math.floor(totalpercent[i]*100)+"%";});
+        				 
+        	//some inner drag functions
+function dragst()
+{
+		
+}
+
+function dragmove()
+{
+	array=[];
+	array.push(d3.event.y);
+}
+
+function dragen()
+{
+	var position=array.pop();
+	//console.log(position);
+	for(var i=0;i<id.length;++i){
+		if(position<place[i]+40){
+			xuhao=i;break;
+		}
+	}
+//	var circle=svg.append("circle")
+//		.attr("cx",150)
+//		.attr("cy",position)
+//		.attr("r", 10)
+//		.attr("fill","red");
+	showBothGraph();
+	//console.log(xuhao)
+}
+
+		}
+		
+		function checking(){           //先画好zoombar，清空画布，再根据勾选的东西看list显示什么
+			svg.selectAll("rect").remove();
+			svg.selectAll("text").remove();
+			zoombar();
+			
+			var topflag=document.getElementById('top').checked;
+			var timesflag=document.getElementById('times').checked;
+			
+			if(topflag==false&&timesflag==false){
+				showAll(idarray,timesarray);
+			}
+			
+			if(topflag==true&&timesflag==false){
+				if(idarray.length<=5)showAll(idarray,timesarray)
+				else{
+					var tmpid=new Array();
+					var tmptimes=new Array();
+					for(var i=0;i<5;i=i+1){
+						tmpid.push(idarray[i]);
+						tmptimes.push(timesarray[i]);
+					}
+					showAll(tmpid,tmptimes);
+					//console.log(tmpid.length)
+				}
+			}
+			
+			if(topflag==false&&timesflag==true){
+				showAll(idarray,timesarray);
+			}
+			
+			if(topflag==true&&timesflag==true){
+				
+				showAll(idarray,timesarray);
+			}
+	
+		}
+		
+		function exitapp(){
+			var nowws=plus.webview.currentWebview();
+			plus.webview.close(nowws);
+		}	
+		
+		function showBothGraph(){
+			mui.init();
+			mui.plusReady(function(){
+				mui.openWindow(
+						{
+							url:'bothshow.html',
+							id:'bothshow',
+						}
+					);
+			});
+		}
+			
+		
+		function showGraph(){
+			mui.init();
+			mui.plusReady(function(){
+				mui.openWindow(
+						{
+							url:'mainshow.html',
+							id:'mainshow',
+						}
+					);
+			});
+		}
+		
+		document.getElementById('exitBtn').onclick=exitapp;
+		document.getElementById("startBtn").onclick=checking;
+		document.getElementById('graphBtn').onclick=showGraph;
+			
+		</script>
+	</body>
+</html>
